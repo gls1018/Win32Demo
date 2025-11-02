@@ -39,3 +39,10 @@
 
 # debug information files
 *.dwo
+
+
+#GLS
+x64/
+Release/
+Debug/
+.vs/
