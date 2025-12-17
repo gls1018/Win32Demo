@@ -7,6 +7,9 @@ int _tWinMain(HINSTANCE hIns, HINSTANCE hPre, LPTSTR lpCMDLine, int nShow)
 
 	SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
 
+	AllocConsole();
+	freopen("CONOUT$", "w+t", stdout);
+
 	//定义窗口 && 注册装口
 	WNDCLASSEX wc{ 0 };
 	wc.cbClsExtra = 0;

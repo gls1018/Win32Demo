@@ -7,9 +7,63 @@
 #include <shellscalingapi.h>
 #pragma comment(lib, "Shcore.lib")
 
+//C++
+#include <print>
+#include <vector>
+#include <string>
+#include <memory>
+
+// C
+#include <stdio.h>
+#include <stdlib.h>
 
 //菜单相关
 static HMENU hTopMenu = nullptr;  //顶层菜单句柄
+
+
+
+
+//WM_KEYDOWN 消息处理函数
+void WMKEYDOWNProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
+{
+	UINT vkCode = (UINT)wPara; //虚拟键码
+	switch (vkCode)
+	{
+		case VK_ESCAPE:
+		{
+			std::printf("ESC Key Pressed!\n");
+		}
+	}
+}
+
+
+// WM_DROPFILES 消息处理函数
+void WMDROPFILESProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
+{
+	HDROP hDrop = (HDROP)wPara;
+	UINT fileCount = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
+	for (UINT i = 0; i < fileCount; i++)
+	{
+		TCHAR filePath[MAX_PATH] = { 0 };
+		DragQueryFile(hDrop, i, filePath, MAX_PATH);
+		_tprintf(_T("Dropped file: %s\n"), filePath);
+	}
+	DragFinish(hDrop);
+}
+
+// WM_CHAR 消息处理函数
+void WMCHARProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
+{
+
+}
+
+
+
+// 创建菜单函数
+void BuildMenu()
+{
+
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
 {
@@ -60,7 +114,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
 		{
 			PostQuitMessage(0);
 		}break;
+		case WM_KEYDOWN:
+		{
+			WMKEYDOWNProc(hWnd, msg, wPara, lPara);
+			return 0;
+		}
 		default:
 			return DefWindowProc(hWnd, msg, wPara, lPara);
 	}
 }
+
+
+
+
+
+
+
