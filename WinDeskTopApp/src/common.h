@@ -1,26 +1,55 @@
-#pragma once
+﻿#pragma once
+
+
+
+
+
 
 //Windows
 #include <windows.h>
+#include <windowsx.h>
 #include <shellapi.h>
 #include <tchar.h>
+#include <Uxtheme.h>
 #include <shellscalingapi.h>
+#include <CommCtrl.h>
 #pragma comment(lib, "Shcore.lib")
+#pragma comment(lib, "Comctl32.lib")
 
 //C++
 #include <print>
 #include <vector>
 #include <string>
 #include <memory>
+#include <map>
+#include <chrono>
+#include <thread>
+#include <iostream>
 
 // C
 #include <stdio.h>
 #include <stdlib.h>
 
+
+//主窗口相关
+HWND hMainWindow = NULL;
+
+//当前程序实例句柄
+HINSTANCE hInstance = NULL; 
+
 //菜单相关
 static HMENU hTopMenu = nullptr;  //顶层菜单句柄
 
-
+// 按钮相关
+HWND hButton1 = NULL;
+HWND hButton2 = NULL;
+HWND hButton3 = NULL;
+HWND hRButton1 = NULL;
+HWND hRButton2 = NULL;
+HWND hRButton3 = NULL;
+HWND hCBox1 = NULL;
+HWND hCBox2 = NULL;
+HWND hCBox3 = NULL;
 
 
 //WM_KEYDOWN 消息处理函数
@@ -53,14 +82,6 @@ void WMDROPFILESProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
 
 // WM_CHAR 消息处理函数
 void WMCHARProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
-{
-
-}
-
-
-
-// 创建菜单函数
-void BuildMenu()
 {
 
 }
@@ -107,8 +128,121 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
 			DestroyMenu(hTopMenu);
 			DestroyMenu(hPop111);
 			DestroyMenu(hPop112);
-			return 0;
 
+
+			//创建按钮
+			hButton1 = CreateWindow(L"Button", L"click1", WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON, 5, 5,
+									50, 30, hWnd, HMENU(0xaa1), ((LPCREATESTRUCT)lPara)->hInstance, NULL);
+
+			// 0xabc12 是控件的ID, 不是菜单句柄
+			hButton2 = CreateWindow(L"Button", L"click2", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 85, 5,
+									50, 30, hWnd, HMENU(0xaa2), ((LPCREATESTRUCT)lPara)->hInstance, NULL);
+
+			hButton3 = CreateWindow(L"Button", L"click3", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 165, 5,
+									50, 30, hWnd, HMENU(0xaa3), ((LPCREATESTRUCT)lPara)->hInstance, NULL);
+
+			hRButton1 = CreateWindow(L"Button", L"RdButton1", WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, 5, 55,
+									100, 30, hWnd, HMENU(0xaa4), ((LPCREATESTRUCT)lPara)->hInstance, NULL);
+
+			hRButton2 = CreateWindow(L"Button", L"RdButton2", WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, 125, 55,
+									 100, 30, hWnd, HMENU(0xaa5), ((LPCREATESTRUCT)lPara)->hInstance, NULL);
+
+			hRButton3 = CreateWindow(L"Button", L"RdButton3", WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, 245, 55,
+									 100, 30, hWnd, HMENU(0xaa6), ((LPCREATESTRUCT)lPara)->hInstance, NULL);
+
+			hCBox1 = CreateWindow(L"Button", L"CheckBox1", WS_CHILD | WS_VISIBLE | BS_CHECKBOX, 5, 105,
+									 100, 30, hWnd, HMENU(0xaa7), ((LPCREATESTRUCT)lPara)->hInstance, NULL);
+
+			hCBox2 = CreateWindow(L"Button", L"CheckBox2", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 125, 105,
+									 100, 30, hWnd, HMENU(0xaa8), ((LPCREATESTRUCT)lPara)->hInstance, NULL);
+
+			hCBox3 = CreateWindow(L"Button", L"CheckBox3", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 245, 105,
+									 100, 30, hWnd, HMENU(0xaa9), ((LPCREATESTRUCT)lPara)->hInstance, NULL);
+			// 按钮美化
+			// 自绘制按钮
+			BS_COMMANDLINK;
+			BM_GETCHECK;
+			BM_GETSTATE;
+			BS_DEFPUSHBUTTON;
+
+		}break;
+		case WM_COMMAND:
+		{	
+			// 按钮控件消息处理
+			WORD id = LOWORD(wPara);
+			WORD code = HIWORD(wPara);
+			HWND hBtn = (HWND)lPara;
+			if (id == 0xaa1)
+			{
+				if (code == BN_CLICKED)
+				{
+					MessageBox(NULL, L"按钮1 被单击 ", NULL, MB_OK);
+				}
+			}
+			if (id == 0xaa2)
+			{
+
+			}
+			if (id == 0xaa3)
+			{
+					
+			}
+			if (id == 0xaa4)
+			{
+				if (SendMessage(hBtn, BM_GETCHECK, 0, 0) == BST_CHECKED)
+				{
+					MessageBox(NULL, L"按钮被选中", L"Test", MB_OK);
+				}
+			}
+
+			if (id == 0xaa5)
+			{
+
+			}
+
+			if (id == 0xaa6)
+			{
+
+			}
+
+			
+			//手动模式下的复选框处理逻辑
+			//BS_CHECKBOX为手动模式
+			//BS_AUTOCHECKBOX为自动模式
+			if (id == 0xaa7)
+			{
+				//获取当前复选框状态
+				BOOL isChecked = SendMessage(hBtn, BM_GETCHECK, 0, 0) == BST_CHECKED;
+
+				if (isChecked == TRUE)
+				{
+					SendMessage(hBtn, BM_SETCHECK, BST_UNCHECKED, 0);
+				}
+				else
+				{
+					if (MessageBox(hWnd, L"确定勾选CheckBox1?", L"提示", MB_YESNO) == IDYES)
+					{
+						SendMessage(hBtn, BM_SETCHECK, BST_CHECKED, 0);
+					}
+				}				
+			}
+
+			if (id == 0xaa8)
+			{
+				//使用Button_GetCheck宏来获取复选框状态.
+				if (Button_GetCheck(hBtn) == BST_CHECKED)
+				{
+					MessageBox(NULL, L"CheckBox2 被选中", L"测试", MB_OK);
+				}
+			}
+			if (id == 0xaa9)
+			{
+				//使用SendMessage 函数来获取复选框状态
+				if (SendMessage(hBtn, BM_GETCHECK, 0, 0) == BST_CHECKED)
+				{
+					MessageBox(NULL, L"CheckBox3 被选中", L"test", MB_OK);
+				}
+			}
 		}break;
 		case WM_DESTROY:
 		{
@@ -123,10 +257,3 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
 			return DefWindowProc(hWnd, msg, wPara, lPara);
 	}
 }
-
-
-
-
-
-
-

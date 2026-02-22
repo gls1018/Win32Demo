@@ -1,9 +1,10 @@
-#include "common.h"
+#include "./common.h"
 #pragma warning(disable: 28251)
 
 
 int _tWinMain(HINSTANCE hIns, HINSTANCE hPre, LPTSTR lpCMDLine, int nShow)
 {
+	hInstance = hIns;
 
 	SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
 
@@ -16,7 +17,7 @@ int _tWinMain(HINSTANCE hIns, HINSTANCE hPre, LPTSTR lpCMDLine, int nShow)
 	wc.cbSize = sizeof(wc);
 	wc.cbWndExtra = 0;
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wc.hCursor = nullptr;
+	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hIcon = nullptr;
 	wc.hIconSm = nullptr;
 	wc.hInstance = hIns;
@@ -30,10 +31,10 @@ int _tWinMain(HINSTANCE hIns, HINSTANCE hPre, LPTSTR lpCMDLine, int nShow)
 	//创建窗口
 	DWORD dwExStyle = WS_EX_ACCEPTFILES;
 	DWORD dwStyle = WS_OVERLAPPEDWINDOW;
-	HWND hMainWnd= CreateWindowEx(dwExStyle, _T("MyWindowClass"), _T("WinApp"), dwStyle, 500, 700, 1500, 1000, NULL, NULL, hIns, NULL);
+	hMainWindow= CreateWindowEx(dwExStyle, _T("MyWindowClass"), _T("WinApp"), dwStyle, 100, 300, 800, 500, NULL, NULL, hIns, NULL);
 	
-	ShowWindow(hMainWnd,SW_NORMAL);
-	UpdateWindow(hMainWnd);
+	ShowWindow(hMainWindow,SW_NORMAL);
+	UpdateWindow(hMainWindow);
 
 
 	//消息循环
