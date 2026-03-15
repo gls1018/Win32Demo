@@ -24,6 +24,7 @@
     <ProjectGuid>{38c1a87e-0666-43e3-8d23-4adf3eea8c80}</ProjectGuid>
     <RootNamespace>WinDeskTopApp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Menu</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
