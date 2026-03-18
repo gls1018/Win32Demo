@@ -1,10 +1,4 @@
 ﻿#pragma once
-
-
-
-
-
-
 //Windows
 #include <windows.h>
 #include <windowsx.h>
@@ -42,40 +36,6 @@ static HMENU hTopMenu = nullptr;  //顶层菜单句柄
 
 
 
-//WM_KEYDOWN 消息处理函数
-void WMKEYDOWNProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
-{
-	UINT vkCode = (UINT)wPara; //虚拟键码
-	switch (vkCode)
-	{
-		case VK_ESCAPE:
-		{
-			std::printf("ESC Key Pressed!\n");
-		}
-	}
-}
-
-
-// WM_DROPFILES 消息处理函数
-void WMDROPFILESProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
-{
-	HDROP hDrop = (HDROP)wPara;
-	UINT fileCount = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
-	for (UINT i = 0; i < fileCount; i++)
-	{
-		TCHAR filePath[MAX_PATH] = { 0 };
-		DragQueryFile(hDrop, i, filePath, MAX_PATH);
-		_tprintf(_T("Dropped file: %s\n"), filePath);
-	}
-	DragFinish(hDrop);
-}
-
-// WM_CHAR 消息处理函数
-void WMCHARProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
-{
-
-}
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
 {
 	switch (msg)
@@ -88,6 +48,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
 			HMENU hPop111 = CreatePopupMenu();
 			//将弹出菜单作为子菜单添加到顶层菜单上
 			AppendMenu(hTopMenu, MF_POPUP, UINT_PTR(hPop111), _T("File"));
+
 			AppendMenu(hPop111, MF_STRING, 0x111, _T("New Tab"));
 			AppendMenu(hPop111, MF_STRING, 0x112, _T("New Window"));
 			AppendMenu(hPop111, MF_STRING, 0x113, _T("New MarkDown Tab"));
@@ -125,11 +86,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wPara, LPARAM lPara)
 		{
 			PostQuitMessage(0);
 		}break;
-		case WM_KEYDOWN:
-		{
-			WMKEYDOWNProc(hWnd, msg, wPara, lPara);
-			return 0;
-		}
+
 		default:
 			return DefWindowProc(hWnd, msg, wPara, lPara);
 	}
