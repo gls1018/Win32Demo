@@ -8,7 +8,8 @@
 #include <CommCtrl.h>
 #pragma comment(lib, "Shcore.lib")
 #pragma comment(lib, "Comctl32.lib")
-
+#pragma warning(disable: 6031)
+#pragma warning(disable: 28251)
 //C++
 #include <print>
 #include <vector>

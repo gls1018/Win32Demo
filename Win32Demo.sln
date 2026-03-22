@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.4.11506.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinDeskTopApp", "WinDeskTopApp\WinDeskTopApp.vcxproj", "{38C1A87E-0666-43E3-8D23-4ADF3EEA8C80}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MenuAndAccelate", "WinDeskTopApp\WinDeskTopApp.vcxproj", "{38C1A87E-0666-43E3-8D23-4ADF3EEA8C80}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CharSetDemo", "CharSetDemo\CharSetDemo.vcxproj", "{2E9C5CE3-E930-458A-83E3-FB120440065F}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Static", "Static\Static.vcxproj", "{3E2FF5AF-9FEF-41C8-ADE1-5447830BDAF0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Edit", "Edit\Edit.vcxproj", "{176F2429-15F0-4DF3-8C94-F5EAE47FB69E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iniFile", "iniFile\iniFile.vcxproj", "{D2BA6268-50B3-425C-830D-F9D911349FED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,14 @@ Global
 		{176F2429-15F0-4DF3-8C94-F5EAE47FB69E}.Release|x64.Build.0 = Release|x64
 		{176F2429-15F0-4DF3-8C94-F5EAE47FB69E}.Release|x86.ActiveCfg = Release|Win32
 		{176F2429-15F0-4DF3-8C94-F5EAE47FB69E}.Release|x86.Build.0 = Release|Win32
+		{D2BA6268-50B3-425C-830D-F9D911349FED}.Debug|x64.ActiveCfg = Debug|x64
+		{D2BA6268-50B3-425C-830D-F9D911349FED}.Debug|x64.Build.0 = Debug|x64
+		{D2BA6268-50B3-425C-830D-F9D911349FED}.Debug|x86.ActiveCfg = Debug|Win32
+		{D2BA6268-50B3-425C-830D-F9D911349FED}.Debug|x86.Build.0 = Debug|Win32
+		{D2BA6268-50B3-425C-830D-F9D911349FED}.Release|x64.ActiveCfg = Release|x64
+		{D2BA6268-50B3-425C-830D-F9D911349FED}.Release|x64.Build.0 = Release|x64
+		{D2BA6268-50B3-425C-830D-F9D911349FED}.Release|x86.ActiveCfg = Release|Win32
+		{D2BA6268-50B3-425C-830D-F9D911349FED}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
